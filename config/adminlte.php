@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => '商品管理',
+    'title' => '顧客対応管理',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,12 +63,12 @@ return [
     |
     */
 
-    'logo' => '<b>商品管理</b>',
+    'logo' => '<b>顧客対応管理</b>',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
-    'logo_img_alt' => '商品管理',
+    'logo_img_alt' => '顧客対応管理',
 
     /*
     |--------------------------------------------------------------------------
@@ -291,8 +291,19 @@ return [
 
     'menu' => [
         [
-            'text' => '商品一覧',
+            'text' => '対応一覧',
             'url'  => 'items',
+            'icon' => 'fas fa-gamepad',
+        ],
+
+        [
+            'text' => '顧客一覧',
+            'url'  => 'clients',
+            'icon' => 'fas fa-gamepad',
+        ],
+        [
+            'text' => '担当者一覧',
+            'url'  => 'users',
             'icon' => 'fas fa-gamepad',
         ],
 

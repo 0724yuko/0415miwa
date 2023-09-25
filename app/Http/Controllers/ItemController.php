@@ -182,6 +182,42 @@ class ItemController extends Controller
            return redirect('/items');
        }
 
+    // 担当者該当IDの対応一覧画面呼び出し
 
+    public function useritem(Request $request,$id)
+    {
+        $items =Item::select([
+        'items.*',
+        'users.name as handleuser_name',
+        'clients.name as client_name'
+        ])->join('clients','items.client_id','=','clients.id')
+    //   ->join('users','items.user_id','=','users.id')
+        ->join('users','items.handleuser_id','=','users.id')
+        ->where('items.handleuser_id',$id)
+        ->get();
+        $handleuser_name = isset($items[0]) ? $items[0]->handleuser_name : '';
+
+
+        return view('item.useritem',['items' => $items,'handleuser_name' => $handleuser_name]);
+    } 
+       
+    // 顧客該当IDの対応一覧画面呼び出し
+
+    public function clientitems(Request $request,$id)
+    {
+        $items =Item::select([
+        'items.*',
+        'users.name as handleuser_name',
+        'clients.name as client_name'
+        ])->join('clients','items.client_id','=','clients.id')
+    //   ->join('users','items.user_id','=','users.id')
+        ->join('users','items.handleuser_id','=','users.id')
+        ->where('items.handleuser_id',$id)
+        ->get();
+        $client_name = isset($items[0]) ? $items[0]->client_name : '';
+
+
+        return view('item.clientitems',['items' => $items,'client_name' => $client_name]);
+    } 
 }
 

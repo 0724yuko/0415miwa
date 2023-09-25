@@ -12,17 +12,17 @@
 
         @csrf
 
-        <div class="card-tools">
+        <!-- <div class="card-tools">
             <div class="input-group input-group-sm">
                 <div class="input-group-append">
                     <a href="{{ url('clients/add') }}" class="btn btn-default">新規顧客登録</a>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="card-tools">
             <div class="input-group input-group-sm">
                 <div class="input-group-append">
-                    <a href="{{ url('clients/index') }}" class="btn btn-default">顧客一覧へ</a>
+                    <a href="{{ url('clients') }}" class="btn btn-default">顧客一覧へ</a>
                 </div>
             </div>
         </div>
