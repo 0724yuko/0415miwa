@@ -37,7 +37,7 @@
                     </div>
 
                     <div class="btn-group text-right ml-auto">
-                            <button type="submit" class="btn btn-outline-primary btn-m">登録/更新</button>
+                            <button type="submit" class="btn btn-outline-primary btn-m">更新</button>
                     </div>
                 </div>
 

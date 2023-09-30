@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         // 担当者一覧取得
-        $users = User::all();
+        $users = User::orderBy('id','asc')->paginate(10);
 
         return view('user.index',['users' => $users]);
     }

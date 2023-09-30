@@ -36,7 +36,7 @@
                                 <tr>
                                     <td>{{ $item->id }}</td>
                                     <td>{{ $item->client_name}}</td>
-                                    <td style=" word-break: break-word;" rows="2">{{ $item->name }}</td>
+                                    <td style="word-break: break-word;"><div style="overflow:hidden;">{{ $item->name }}</div></td>
                                     <td>{{ $item->handleuser_name }}</td>
                                     <td>{{ $item->handle_at ->format('Y-m-d')}}</td>
                                     <td>
