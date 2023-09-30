@@ -19,9 +19,9 @@
             @endif
 <form action="/items/update/{{$item->id}}" method="post">
                 @csrf
-                <div class="card-body table-responsive p-0">
+                <div class="container card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
-                            <tr><th>ID</th><td>{{ $item->id }}</td></tr>
+                            <tr><th style="width: 10%">ID</th><td style="width: 90%">{{ $item->id }}</td></tr>
                             <tr><th>顧客名</th><td>{{ $item->client_name }}</td></tr>
                             <tr><th>対応内容</th><td>
                                 <textarea name="name" id="produntonInputName" class="form-control col-xs-2" rows="5" required>{{old('name', $item->name) }}</textarea></td></tr>
@@ -44,11 +44,17 @@
                             <tr><th>完了日</th><td>
                                 <input type="date" class="form-control" id="produntonInputComp_at" name="comp_at" >{{ old('comp_at',$item->comp_at) }}</td></tr>
                     </table>
-                </div>
-                      
-                <div class="mb-2">
-                    <button type="submit" class="btn btn-primary btn-sm">更新</button>
-                </div>
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <button type="button" onClick="history.back()" class="btn btn-primary">戻る</button>
+                        </div>
+
+                        <div class="btn-group text-right ml-auto">
+                             <button type="submit" class="btn btn-primary btn-m">更新</button>
+                        </div>
+                    </div>
+                </div>                     
+
             </form>
 
 @stop

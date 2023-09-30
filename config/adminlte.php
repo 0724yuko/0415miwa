@@ -307,6 +307,12 @@ return [
             'icon' => 'fas fa-gamepad',
         ],
 
+        [
+            'text' => '新規対応登録',
+            'url'  => 'items/add',
+            'icon' => 'fas fa-gamepad',
+        ],
+
         // AdminLTEデフォルト
         /*
         // Navbar items:

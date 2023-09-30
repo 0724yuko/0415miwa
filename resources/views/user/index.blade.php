@@ -33,6 +33,8 @@
             </div>
         </div>
     </div>
+    <button type="button" onClick="history.back()" class="btn btn-outline-primary">戻る</button>
+
 @stop
 
 @section('css')

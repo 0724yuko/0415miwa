@@ -26,23 +26,29 @@
                     　　<h3><div class="client_name">{{ $client_name }}</div></h3>
                 </div>
                 <div class="card-body table-responsive p-0">
-                    <table class="table table-hover text-nowrap">
+                    <table class="table table-hover">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th style="width: 3%">ID</th>
+                                <th style="width: 36%">対応内容</th>
+                                <th style="width: 13%">対応者</th>
+                                <th style="width: 11%">対応日</th>
+                                <th style="width: 8%">ステータス</th>
+                                <th style="width: 15%">対応カードへ</th>
+                                <!-- <th>ID</th>
                                 <th>対応者名</th>
                                 <th>対応内容</th>
                                 <th>対応日</th>
                                 <th>ステータス</th>
-                                <th>対応カードへ</th>
+                                <th>対応カードへ</th> -->
                             </tr>
                         </thead>
                         <tbody>
                             @foreach ($items as $item)
                                 <tr>
                                     <td>{{ $item->id }}</td>
-                                    <td>{{ $item->handleuser_name}}</td>
-                                    <td>{{ $item->name }}</td>
+                                    <td style=" word-break: break-word;" rows="2">{{ $item->name}}</td>
+                                    <td>{{ $item->handleuser_name }}</td>
                                     <td>{{ $item->handle_at ->format('Y-m-d')}}</td>
                                     <td>
                                     @switch($item->status)
@@ -63,6 +69,8 @@
             </div>
         </div>
     </div>
+    <button type="button" onClick="history.back()" class="btn btn-outline-primary">戻る</button>
+    <div class="d-flex justify-content-center align-items-center">{{ $items->links('vendor.pagination.bootstrap-4') }}</div> 
 @stop
 
 @section('css')

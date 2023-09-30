@@ -62,7 +62,10 @@
                 </div>
             </div>
         </div>
+        <button type="button" onClick="history.back()" class="btn btn-outline-primary">戻る</button>
+
     </div>
+    <div class="d-flex justify-content-center align-items-center">{{ $items->links('vendor.pagination.bootstrap-4') }}</div> 
 @stop
 
 @section('css')

@@ -7,7 +7,8 @@
 @stop
 
 @section('content')
-    <div class="row">
+    <!-- <div class="row"> -->
+    <div class = "container">   
         <div class="col-md-10">
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -23,8 +24,9 @@
                 <form action="/items/store" method="POST">
                     @csrf
                     <div class="card-body">
-
+                    <table>
                         <div class="form-group">
+                            
                             <label for="client_id">顧客名</label>
                             <select class="form-control" name="client_id" >
                             <option value="">顧客を選択してください</option>    
@@ -105,14 +107,29 @@
                         </div>
 
                     </div>
+                    </table>
+<!-- //以下レイアウト整理中　ボタン左右に配置予定 -->
+                    <!-- <div class="card-footer">
+                        <button type="button" onClick="history.back()" class="btn btn-primary">戻る</button>
+                        <div class="btn-group ml-auto">
+                            <button type="submit" class="btn btn-primary"  >登録/更新</button>
+                        </div>
+                    </div> -->
+                    <div class="btn-toolbar">
+                        <div class="btn-group">
+                            <button type="button" onClick="history.back()" class="btn btn-outline-primary">戻る</button>
+                        </div>
 
-                    <div class="card-footer">
-                        <button type="submit" class="btn btn-primary">登録/更新</button>
+                        <div class="btn-group text-right ml-auto">
+                             <button type="submit" class="btn btn-outline-primary btn-m">登録/更新</button>
+                        </div>
                     </div>
                 </form>
             </div>
         </div>
     </div>
+    
+
 @stop
 
 @section('css')

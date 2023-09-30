@@ -31,15 +31,22 @@
                                 <textarea name="data" id="produntonInputData" class="form-control col-xs-2" rows="5" required>{{old('data', $client->data) }}</textarea></td></tr>
                     </table>
                 </div>
-                      
-                <div class="mb-2">
-                    <button type="submit" class="btn btn-primary btn-sm">更新</button>
+                <div class="btn-toolbar">
+                    <div class="btn-group">
+                        <button type="button" onClick="history.back()" class="btn btn-outline-primary">戻る</button>
+                    </div>
+
+                    <div class="btn-group text-right ml-auto">
+                            <button type="submit" class="btn btn-outline-primary btn-m">登録/更新</button>
+                    </div>
                 </div>
+
             </form>
 
             </div>
         </div>
     </div>
+
 @stop
 
 @section('css')

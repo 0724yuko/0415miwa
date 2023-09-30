@@ -32,7 +32,9 @@ class ItemController extends Controller
           ])->join('clients','items.client_id','=','clients.id')
         //   ->join('users','items.user_id','=','users.id')
           ->join('users','items.handleuser_id','=','users.id')
-          ->get();
+          ->orderBy('updated_at', 'desc')
+          ->paginate(10);
+        //   ->get();
 
         // select * from items join on items.user_id = users.id
         // select * from items join on items.client_id = clients.id
@@ -190,11 +192,13 @@ class ItemController extends Controller
         'items.*',
         'users.name as handleuser_name',
         'clients.name as client_name'
-        ])->join('clients','items.client_id','=','clients.id')
+        ])->orderBy('updated_at', 'desc')
+        ->join('clients','items.client_id','=','clients.id')
     //   ->join('users','items.user_id','=','users.id')
         ->join('users','items.handleuser_id','=','users.id')
         ->where('items.handleuser_id',$id)
-        ->get();
+        ->paginate(10);
+        // ->get();
         $handleuser_name = isset($items[0]) ? $items[0]->handleuser_name : '';
 
 
@@ -209,12 +213,15 @@ class ItemController extends Controller
         'items.*',
         'users.name as handleuser_name',
         'clients.name as client_name'
-        ])->join('clients','items.client_id','=','clients.id')
+        ])->orderBy('updated_at', 'desc')
+        ->join('clients','items.client_id','=','clients.id')
     //   ->join('users','items.user_id','=','users.id')
         ->join('users','items.handleuser_id','=','users.id')
-        ->where('items.handleuser_id',$id)
-        ->get();
+        ->where('items.client_id',$id)
+        ->paginate(10);
+        // ->get();
         $client_name = isset($items[0]) ? $items[0]->client_name : '';
+        //☝データがないときのエラー回避
 
 
         return view('item.clientitems',['items' => $items,'client_name' => $client_name]);

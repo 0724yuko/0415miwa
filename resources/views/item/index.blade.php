@@ -4,13 +4,13 @@
 
 @section('content_header')
     <h1>対応一覧</h1>
-    <div class="card-tools">
+    <!-- <div class="card-tools">
         <div class="input-group ">
             <div class="input-group-append ml-auto">
                 <a href="{{ url('items/add') }}" class="btn btn-default">新規対応登録</a>
             </div>
         </div>
-    </div>
+    </div> -->
 @stop
 
 @section('content')
@@ -58,6 +58,9 @@
             </div>
         </div>
     </div>
+        <button type="button" onClick="history.back()" class="btn btn-outline-primary">戻る</button>
+
+    <div class="d-flex justify-content-center align-items-center">{{ $items->links('vendor.pagination.bootstrap-4') }}</div> 
 @stop
 
 @section('css')

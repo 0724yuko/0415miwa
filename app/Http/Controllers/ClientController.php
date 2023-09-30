@@ -14,7 +14,7 @@ class ClientController extends Controller
     public function index()
     {
         // 顧客一覧取得
-        $clients = Client::all();
+        $clients = Client::orderBy('id','asc')->paginate(10);
 
         return view('client.index',['clients' => $clients]);
     }
@@ -33,7 +33,7 @@ class ClientController extends Controller
             return view('client.list',[
                 'clients'=> $clients,
                 'keyword' => $keyword
-        ]);
+        ])->paginate(10);
         }
     
 
