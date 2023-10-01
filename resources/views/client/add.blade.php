@@ -1,4 +1,3 @@
-//非使用
 @extends('adminlte::page')
 
 @section('title', '顧客登録')
@@ -21,7 +20,7 @@
             @endif
 
             <div class="card card-primary">
-                <form method="POST">
+                <form action="/clients/store" method="POST">
                     @csrf
                     <div class="card-body">
                         <div class="form-group">
@@ -36,7 +35,7 @@
 
                         <div class="form-group">
                             <label for="data">顧客詳細</label>
-                            <texterea type="text" class="form-control" id="data" name="data" rows="5" placeholder="顧客詳細">
+                            <input type="text" class="form-control" id="data" name="data" rows="5" placeholder="顧客詳細">
                         </div>
                     </div>
 

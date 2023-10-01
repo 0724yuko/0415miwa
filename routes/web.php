@@ -38,6 +38,8 @@ Route::prefix('clients')->group(function () {
     Route::get('/clientcard/{id}', [App\Http\Controllers\ClientController::class, 'clientcard']);//顧客カード表示
     Route::post('/update/{id}', [App\Http\Controllers\ClientController::class, 'update']);//抽出した顧客カードを保存
     // Route::get('/list', [App\Http\Controllers\ClientController::class, 'list']);//顧客検索//非使用
+    Route::get('/add', [App\Http\Controllers\ClientController::class, 'add']);//新規登録画面表示
+    Route::post('/store', [App\Http\Controllers\ClientController::class, 'store']);//登録内容保存
 });
 
 Route::prefix('users')->group(function () {

@@ -40,26 +40,34 @@ class ClientController extends Controller
     /**
      * 顧客登録
      */
-    // public function add(Request $request)
-    // {
-    //     // POSTリクエストのとき
-    //     if ($request->isMethod('post')) {
-    //         // バリデーション
-    //         $this->validate($request, [
-    //             'name' => 'required|max:200',
-    //         ]);
+     public function add(Request $request)
+     {
+        return view('client.add');
+     }
 
-    //         // 顧客登録
-    //         Client::create([
-    //             'name' => $request->name,
-    //             'data' => $request->data,
-    //         ]);
+     //新規登録を保存
+     public function store(Request $request)
+     {
+        $messages = [
+            'name.max' => '200文字までです。',
+            'data.max' => '500文字までです。',
+        ];
+        $request->validate([
+            'name' => 'required|max:200',
+            'data' => 'required|max:500'
+        ],$messages);
 
-    //         return redirect('/clients');
-    //     }
+             // 顧客登録
+        $client = new Client;
+        $client -> create([
+            'name' => $request->name,
+            'data' => $request->data,
+        ]);
 
-    //     return view('client.add');
-    // }
+             return redirect('/clients');
+     }
+    //      return view('client.add');
+    //  }
 
 
        // 該当IDの編集画面呼び出し
