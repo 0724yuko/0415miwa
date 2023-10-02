@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use App\Models\Item;
 
 class ItemController extends Controller
@@ -38,10 +39,39 @@ class ItemController extends Controller
             $query->where('items.status', '<>', 5);
         }
     
-        $items = $query->paginate(10);
+        // $items = $query->paginate(3);
+        $items = $query->paginate(10)->appends(['exclude_completed' => $request->exclude_completed]);
     
         return view('item.index', compact('items'));
     }
+
+////セッションを使う
+
+// public function list(Request $request)
+// {
+//     $query = Item::select([
+//         'items.*',
+//         'users.name as handleuser_name',
+//         'clients.name as client_name'
+//     ])
+//     ->join('clients', 'items.client_id', '=', 'clients.id')
+//     ->join('users', 'items.handleuser_id', '=', 'users.id')
+//     ->orderBy('updated_at', 'desc');
+
+//     // statusが5を除くチェックボックスがONの場合
+//     if ($request->input('exclude_completed')) {
+//         $query->where('items.status', '<>', 5);
+//         Session::put('exclude_completed', true);
+//     } else {
+//         Session::forget('exclude_completed');
+//     }
+
+//     $items = $query->paginate(3);
+//     $excludeCompleted = Session::get('exclude_completed', false);
+
+//     return view('item.index', compact('items', 'excludeCompleted'));
+// }
+
 
     /**
      * 対応一覧
