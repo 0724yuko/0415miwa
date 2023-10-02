@@ -24,7 +24,7 @@ Route::get('home/list', [App\Http\Controllers\HomeController::class, 'list']);
 
 
 Route::prefix('items')->group(function () {
-    Route::get('/', [App\Http\Controllers\ItemController::class, 'index']);//一覧表示
+    Route::get('/', [App\Http\Controllers\ItemController::class, 'list']);//一覧表示
     Route::get('/add', [App\Http\Controllers\ItemController::class, 'add']);//新規登録画面表示
     Route::post('/store', [App\Http\Controllers\ItemController::class, 'store']);//登録内容保存
     Route::get('/itemcard/{id}', [App\Http\Controllers\ItemController::class, 'itemcard']);//対応カード表示

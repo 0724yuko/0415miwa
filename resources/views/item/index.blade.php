@@ -3,7 +3,26 @@
 @section('title', '対応一覧')
 
 @section('content_header')
-    <h1>対応一覧</h1>
+<div class="row">
+    <div class="col-md-6">
+        <h1>対応一覧</h1>
+    </div>
+    <div class="col-md-6 text-right">
+    <form method="GET" action="/items/" id="filterForm">
+        <div class="status_select text-right ml-auto" >    
+        <label>
+            <input type="checkbox" style="transform:scale(2)" name="exclude_completed" value="1" {{ request('exclude_completed') ? 'checked' : '' }} onchange="document.getElementById('filterForm').submit();">
+            　完了を除く　　　
+        </label>
+        </div>
+    </form>
+    </div>
+
+
+    <!-- 
+    <p><input name="status" type="checkbox" style="transform:scale(2)" >　完了を除く　　　</p>
+    </div> -->
+
     <!-- <div class="card-tools">
         <div class="input-group ">
             <div class="input-group-append ml-auto">

@@ -18,6 +18,31 @@ class ItemController extends Controller
         $this->middleware('auth');
     }
 
+    
+    /**
+     * 対応一覧2
+     */
+    public function list(Request $request)
+    {
+        $query = Item::select([
+            'items.*',
+            'users.name as handleuser_name',
+            'clients.name as client_name'
+        ])
+        ->join('clients', 'items.client_id', '=', 'clients.id')
+        ->join('users', 'items.handleuser_id', '=', 'users.id')
+        ->orderBy('updated_at', 'desc');
+    
+        // statusが5を除くチェックボックスがONの場合
+        if ($request->input('exclude_completed')) {
+            $query->where('items.status', '<>', 5);
+        }
+    
+        $items = $query->paginate(10);
+    
+        return view('item.index', compact('items'));
+    }
+
     /**
      * 対応一覧
      */
