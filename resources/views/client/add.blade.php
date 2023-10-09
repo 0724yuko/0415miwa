@@ -35,9 +35,9 @@
 
                         <div class="form-group">
                             <label for="data">顧客詳細</label>
-                            <input type="text" class="form-control" id="data" name="data" rows="5" placeholder="顧客詳細">
+                            <textarea class="form-control" id="data" name="data" rows="3" placeholder="顧客詳細" required>{{old('data')}}</textarea>
                         </div>
-                    </div>
+                        </div>
 
                     <div class="card-footer">
                         <button type="submit" class="btn btn-primary">登録</button>

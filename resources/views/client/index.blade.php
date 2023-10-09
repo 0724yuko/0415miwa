@@ -10,7 +10,14 @@
     <div class="row">
         <div class="col-12">
             <div class="card">
-
+            <div class="text-right">
+                <form action="/clients/" method="get">@csrf
+                    <div class="search-area container bg-outline-dark">
+                        <table><tr><th><input type="text" class="form-control" placeholder="キーワード検索" name="keyword" value="{{ $keyword }}"></th>
+                        <th><button type="submit" class="btn btn-outline-light btn-m">検索</button></th><th class="text-light">　顧客名検索</th></tr></table>
+                    </div>
+                </form>    
+            </div>
                     <table class="table table-hover">
                         <thead>
                             <tr>

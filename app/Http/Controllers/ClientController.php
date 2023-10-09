@@ -11,29 +11,34 @@ class ClientController extends Controller
         /**
      * 顧客一覧
      */
-    public function index()
-    {
-        // 顧客一覧取得
-        $clients = Client::orderBy('id','asc')->paginate(10);
+    // public function index()
+    // {
+    //     // 顧客一覧取得
+    //     $clients = Client::orderBy('id','asc')->paginate(10);
 
-        return view('client.index',['clients' => $clients]);
-    }
+    //     return view('client.index',['clients' => $clients]);
+    // }
 
 
         //一覧画面表示
-        public function list(Request $request)
+        public function index(Request $request)
         {    
-            $keyword = $request -> keyword;
+            $keyword = $request -> input('keyword');//requestからキーワードを取得
+            //クエリを構築
             $query = Client::query();
-            if($request->keyword != ""){
-            $query = $query->where( 'name' , 'like' , '%' . $keyword .'%' );
+            if($keyword != ""){
+                $query->where( 'name' , 'like' , '%' . $keyword .'%' );
             }
     
-            $clients = $query ->orderBy('id', 'asc'); 
-            return view('client.list',[
+            //ソートはpaginateの前に設定する費用があります
+            $query->orderBy('id','asc');
+            //ページネーションを適用
+            $clients = $query ->paginate(10)
+            ->appends(['keyword' => $keyword]);
+            return view('client.index',[
                 'clients'=> $clients,
                 'keyword' => $keyword
-        ])->paginate(10);
+        ]);
         }
     
 
@@ -77,8 +82,14 @@ class ClientController extends Controller
            $client = Client::find($id);
            return view('client.clientcard',['client' => $client]);
        } 
-    
-    
+
+           // 削除処理
+    public function delete($id)
+    {
+        Client::find($id)->delete();
+        return redirect('/clients');
+    }    
+
        // 編集画面を保存
        public function update(Request $request,$id)
        {

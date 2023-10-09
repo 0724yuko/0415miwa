@@ -8,7 +8,8 @@
         <h1>対応一覧</h1>
     </div>
     <div class="col-md-6 text-right">
-    <form method="GET" action="/items/" id="filterForm">
+    <form method="GET" action="{{ route('items.handle') }}"id="filterForm">
+        @csrf
         <label>
             <input type="checkbox" style="transform:scale(2)" name="exclude_completed" value="1" {{ request('exclude_completed') ? 'checked' : '' }} onchange="document.getElementById('filterForm').submit();">
             　完了を除く　　　
@@ -32,7 +33,17 @@
                                 <th style="width: 16%">顧客名</th>
                                 <th style="width: 36%">対応内容</th>
                                 <th style="width: 13%">対応者</th>
-                                <th style="width: 11%">対応日</th>
+                                <th style="width: 11%">対応日　　
+                                <!-- <form action="" method="POST"> -->
+                                <!-- @csrf -->
+                                    <!-- <input type="radio" name="sort-radio" value="desc">降順
+                                    <input type="radio" name="sort-radio" value="asc">昇順
+                                    <input type="submit">
+                                </form> -->
+                                <a href="{{ route('items.handle', ['sort' => 'asc', 'exclude_completed' => request('exclude_completed')]) }}">昇順</a>
+                                <a href="{{ route('items.handle', ['sort' => 'desc', 'exclude_completed' => request('exclude_completed')]) }}">降順</a>
+
+                            </th>
                                 <th style="width: 8%">ステータス</th>
                                 <th style="width: 15%">対応カードへ</th>
                             </tr>

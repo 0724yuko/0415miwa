@@ -23,7 +23,13 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">顧客名</h3>
-                    　　<h3><div class="client_name">{{ $client_name }}</div></h3>
+                    　　<h3><div class="col-md-6"> 
+                                <div class="client_name">{{ $client_name }}</div>
+                            </div>
+                            <div class="col-md-6 text-right ml-auto col-md-2">  
+                                <a class="btn btn-outline-primary btn-m" href="{{ route('clientcard',['id' => $client_id]) }}">顧客カードへ</a>
+                            </div>
+                        </h3>
                 </div>
                 <div class="card-body table-responsive p-0">
                     <table class="table table-hover">
@@ -69,8 +75,15 @@
             </div>
         </div>
     </div>
-    <button type="button" onClick="history.back()" class="btn btn-outline-primary">戻る</button>
-    <div class="d-flex justify-content-center align-items-center">{{ $items->links('vendor.pagination.bootstrap-4') }}</div> 
+<div class="row">
+    <div class="col-6">
+        <button type="button" onClick="history.back()" class="btn btn-outline-primary col-md-2">戻る</button>
+    </div>
+    <div class="btn-group text-right ml-auto">
+        <a class="btn btn-outline-primary btn-m" href="{{ route('items.add',['client_id' => $client_id]) }}">新規対応登録</a>　　
+    </div>
+    <div class="d-flex justify-content-center align-items-center">{{ $items->links('vendor.pagination.bootstrap-4') }}</div>
+</div>
 @stop
 
 @section('css')

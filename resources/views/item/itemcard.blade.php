@@ -3,7 +3,9 @@
 @section('title', '対応カード')
 
 @section('content_header')
-    <h1>対応カード</h1>
+
+        <h1>対応カード</h1>
+
 @stop
 <!-- <a href="/items" class="lh-lg fw-bold">>>>一覧に戻る</a> -->
 
@@ -21,7 +23,13 @@
                 @csrf
                 <div class="container card-body table-responsive p-0">
                     <table class="table table-hover text-nowrap">
-                            <tr><th style="width: 10%">ID</th><td style="width: 90%">{{ $item->id }}</td></tr>
+                            <tr>
+                                <th style="width: 10%">ID</th>
+                                <td style="width: 90%">{{ $item->id }}</td>
+                                <td>
+                                    <a onclick="return confirm('この対応案件を削除しますか?')" class="btn btn-outline-danger" href="/items/delete/{{$item->id}}">削除</a>
+                                </td>
+                            </tr>
                             <tr><th>顧客名</th><td>{{ $item->client_name }}</td></tr>
                             <tr><th>対応内容</th><td>
                                 <textarea name="name" id="produntonInputName" class="form-control col-xs-2" rows="5" required>{{old('name', $item->name) }}</textarea></td></tr>
@@ -45,12 +53,18 @@
                                 <input type="date" class="form-control" id="produntonInputComp_at" name="comp_at" >{{ old('comp_at',$item->comp_at) }}</td></tr>
                     </table>
                     <div class="btn-toolbar">
-                        <div class="btn-group">
-                            <button type="button" onClick="history.back()" class="btn btn-primary">戻る</button>
+                        <div class="btn-group col-md-2">
+                            <button type="button" onClick="history.back()" class="btn btn-outline-primary">戻る</button>
+                        </div>
+                        <div class="btn-group text-right ml-auto">
+                            <a href="/items/clientitems/{{ $item->client_id }}" class="btn btn-outline-primary btn-m">当該顧客対応一覧</a>
+                        </div>
+                        <div class="btn-group text-right ml-auto">
+                            <a href="/clients/clientcard/{{ $item->client_id }}" class="btn btn-outline-primary btn-m">当該顧客カード</a>
                         </div>
 
-                        <div class="btn-group text-right ml-auto">
-                             <button type="submit" class="btn btn-primary btn-m">更新</button>
+                        <div class="btn-group text-right ml-auto col-md-2">
+                             <button type="submit" class="btn btn-outline-primary btn-m">更新</button>
                         </div>
                     </div>
                 </div>                     

@@ -309,11 +309,15 @@ return [
 
         [
             'text' => '新規対応登録',
-            'url'  => 'items/add',
+            'url'  => 'items/add/new',
             'icon' => 'fas fa-gamepad',
         ],
 
-        // AdminLTEデフォルト
+        [
+            'text' => '新規顧客登録',
+            'url'  => 'clients/add',
+            'icon' => 'fas fa-gamepad',
+        ],        // AdminLTEデフォルト
         /*
         // Navbar items:
         [

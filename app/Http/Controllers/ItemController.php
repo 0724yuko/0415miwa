@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 // use Illuminate\Support\Facades\Session;
 use App\Models\Item;
+use App\Models\Client;
+use App\Models\User;
 
 class ItemController extends Controller
 {
@@ -25,6 +27,7 @@ class ItemController extends Controller
      */
     public function list(Request $request)
     {
+        // dd($request);
         $query = Item::select([
             'items.*',
             'users.name as handleuser_name',
@@ -32,20 +35,65 @@ class ItemController extends Controller
         ])
         ->join('clients', 'items.client_id', '=', 'clients.id')
         ->join('users', 'items.handleuser_id', '=', 'users.id')
-        ->orderBy('updated_at', 'desc');
+        ->orderBy('updated_at','desc');
     
         // statusが5を除くチェックボックスがONの場合
         if ($request->input('exclude_completed')) {
             $query->where('items.status', '<>', 5);
         }
     
-        // $items = $query->paginate(3);
         $items = $query->paginate(10)->appends(['exclude_completed' => $request->exclude_completed]);
     
         return view('item.index', compact('items'));
     }
 
-////セッションを使う
+    /**
+     * 対応一覧handle_atならべかえ
+     */
+    public function handle(Request $request)
+    {
+        //パラメーターからソート情報を取得
+        $sort = $request->input('sort');
+        $exclude_completed = $request->input('exclude_completed', 0);
+
+        //ソートや「完了を除く」の条件に戻づいてデータを取得
+        // dd($request);
+        $query = Item::select([
+            'items.*',
+            'users.name as handleuser_name',
+            'clients.name as client_name'
+        ])
+        ->join('clients', 'items.client_id', '=', 'clients.id')
+        ->join('users', 'items.handleuser_id', '=', 'users.id');
+        if($exclude_completed){
+            $query->where('items.status', '<>', 5);
+        }
+        if($sort === 'asc'){
+            $query->orderBy('handle_at', 'asc');
+        }elseif($sort === 'desc'){
+            $query->orderBy('handle_at', 'desc');
+        }
+        //他の条件に基づく絞り込みやソートを追加できます
+        
+        // ->orderBy('handle_at',$request->input('sort')??'asc');
+        // //->orderBy('updated_at', 'asc');
+    
+        // // statusが5を除くチェックボックスがONの場合
+        // if ($request->input('exclude_completed')) {
+        //     $query->where('items.status', '<>', 5);
+        // }
+        //ページネーション
+        $items = $query->paginate(10)->appends(['exclude_completed' => $request->exclude_completed,'sort'=>$request->sort]);
+        //ビューにデータを渡す
+        return view('item.index',[
+            'items' => $items,
+            'sort' => $sort,
+            'exclude_completed' => $exclude_completed,
+        ]);
+           
+    }
+    
+    ////セッションを使う
 
 // public function list(Request $request)
 // {
@@ -100,34 +148,28 @@ class ItemController extends Controller
     /**
      * 新規対応登録画面表示
      */
-    public function add(Request $request)
+    public function add(Request $request , $client_id)
     {
-        // // POSTリクエストのとき
-        // if ($request->isMethod('post')) {
-        //     // バリデーション
-        //     $this->validate($request, [
-        //         'name' => 'required|max:500',
-        //     ]);
+        if($client_id=='new'){
+            $client_id = null;
+        }
+        $clients = Client::all();
+        $users = User::all();
 
-        //     // 対応登録
-        //     Item::create([
-        //         'client_id' => $client_id,
-        //         'user_id' => $user_id,
-        //         'handleuser_id' => $handleuser_id,
-        //         'makeitem_at' => $makeitem_at,
-        //         'handle_at' => $handle_at,
-        //         'name' => $request->name,
-        //         'remark' => $remark,
-        //         'status' => $status,
-        //         'comp_at' => $comp_at,
-        //     ]);
 
-        //     return redirect('/items');
-        // }
-
-        return view('item.add');
+        return view('item.add',compact('clients','users','client_id'));
     }
+    // /**
+    //  * 特定顧客新規対応登録画面表示
+    //  */
+    // public function add_client_id($client_id)
+    // {
+    //     $clients = Client::all();
+    //     $users = User::all();
 
+
+    //     return view('item.add',compact('clients','users'));
+    // }
 
     //新規登録を保存
     public function store(Request $request)
@@ -162,7 +204,18 @@ class ItemController extends Controller
             'comp_at' =>  $request -> comp_at,
         ]);
 
-        return redirect('/items');
+        // return redirect('/items');
+        if($request->input('continue_registration') == 1) {
+            //「続けて登録」にチェックが入っている場合
+            $client_id = $request->input('client_id');
+            return redirect('/items/add/'. $client_id);
+            // return view('item.add',compact('clients','users','client_id'));
+        }else{
+            //チェックが入っていない場合
+            return redirect('/items');
+        }
+
+        
     }
 
 
@@ -212,7 +265,13 @@ class ItemController extends Controller
     //   ->get();
            return view('item.itemcard',['item' => $item]);
        } 
-    
+
+    // 削除処理
+    public function delete($id)
+    {
+        Item::find($id)->delete();
+        return redirect('/items');
+    }    
     
        // 編集画面を保存
        public function update(Request $request,$id)
@@ -243,31 +302,54 @@ class ItemController extends Controller
 
     public function useritem(Request $request,$id)
     {
-        $items =Item::select([
+        $sort = $request->input('sort');
+        $query =Item::select([
         'items.*',
         'users.name as handleuser_name',
         'clients.name as client_name'
-        ])->orderBy('updated_at', 'desc')
+        ])
         ->join('clients','items.client_id','=','clients.id')
-    //   ->join('users','items.user_id','=','users.id')
         ->join('users','items.handleuser_id','=','users.id')
-        ->where('items.handleuser_id',$id)
-        ->paginate(10);
+        ->where('items.handleuser_id',$id);
+        if($sort){
+            $query->orderBy('handle_at',$sort);
+        }else{
+            $query->orderBy('updated_at', 'desc');
+        }
+        // statusが5を除くチェックボックスがONの場合
+        if ($request->input('exclude_completed')) {
+            $query->where('items.handleuser_id',$id)
+            ->where('items.status', '<>', 5);
+        }
+        $items = $query->paginate(10)->appends(['exclude_completed' => $request->exclude_completed,'sort'=>$request->sort]);
+        // ->paginate(10);
         // ->get();
         $handleuser_name = isset($items[0]) ? $items[0]->handleuser_name : '';
 
 
-        return view('item.useritem',['items' => $items,'handleuser_name' => $handleuser_name]);
+        return view('item.useritem',[
+            'items' => $items,
+            'handleuser_name' => $handleuser_name,
+            'handleuser_id' => $id,
+            'sort' => $sort
+        ]);
     } 
+
        
+
+
     // 顧客該当IDの対応一覧画面呼び出し
 
     public function clientitems(Request $request,$id)
     {
+        //クライアント情報を取得
+        $client = Client::FindOrFail($id);
+        //アイテム情報を取得
         $items =Item::select([
         'items.*',
         'users.name as handleuser_name',
-        'clients.name as client_name'
+        'clients.name as client_name',
+        'clients.id as client_id'
         ])->orderBy('updated_at', 'desc')
         ->join('clients','items.client_id','=','clients.id')
     //   ->join('users','items.user_id','=','users.id')
@@ -276,10 +358,14 @@ class ItemController extends Controller
         ->paginate(10);
         // ->get();
         $client_name = isset($items[0]) ? $items[0]->client_name : '';
-        //☝データがないときのエラー回避
+        $client_id = isset($items[0]) ? $items[0]->client_id : '';
+        // ☝データがないときのエラー回避
 
-
-        return view('item.clientitems',['items' => $items,'client_name' => $client_name]);
+        return view('item.clientitems',[
+            'items' => $items,
+            'client_id' => $client_id,
+            'client_name' => $client_name,
+        ]);
     } 
 }
 

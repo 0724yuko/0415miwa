@@ -3,13 +3,13 @@
 @section('title', '対応カード')
 
 @section('content_header')
-    <h1>対応カード</h1>
+        <h1>対応カード</h1>
 @stop
 
 @section('content')
     <!-- <div class="row"> -->
     <div class = "container">   
-        <div class="col-md-10">
+        <div class="col-md-12">
             @if ($errors->any())
                 <div class="alert alert-danger">
                     <ul>
@@ -26,52 +26,30 @@
                     <div class="card-body">
                     <table>
                         <div class="form-group">
-                            
                             <label for="client_id">顧客名</label>
                             <select class="form-control" name="client_id" >
-                            <option value="">顧客を選択してください</option>    
-                            <option value="1" <?php // if($client_id == "1") { echo "selected"; } ?>>北見海子(北海道)</option>
-                            <option value="2" <?php //if($client_id == "2") { echo "selected"; } ?>>秋山里子(秋田県)</option>
-                            <option value="3" <?php //if($client_id == "3") { echo "selected"; } ?>>森山青子(青森県)</option>
-                            <option value="4" <?php //if($client_id == "4") { echo "selected"; } ?>>岩田守男(岩手県)</option>
-                            <option value="5" <?php //if($client_id == "5") { echo "selected"; } ?>>福田操(福島県)</option>
-                            <option value="6" <?php //if($client_id == "6") { echo "selected"; } ?>>新沼武(新潟県)</option>
-                            <option value="7" <?php //if($client_id == "7") { echo "selected"; } ?>>岡田忠雄(岡山県)</option>
-                            <option value="8" <?php //if($client_id == "8") { echo "selected"; } ?>>沖田春雄(沖縄県)</option>
-                            <option value="9" <?php //if($client_id == "9") { echo "selected"; } ?>>永井雄大(長崎県)</option>
-                            <option value="10" <?php //if($client_id == "10") { echo "selected"; } ?>>宮田五郎(宮崎県)</option>
+                            <option value="">顧客を選択してください</option> 
+                            @foreach($clients as $client)   
+                            <option value="{{ $client->id }}" @if( $client_id ==  $client->id ) selected @endif >{{ $client->name }}</option>
+                            @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="user_id">登録者</label>
                             <select class="form-control" name="user_id" >
-                            <option value="1" <?php //if($user_id == "1") { echo "selected"; } ?>>テック太郎</option>
-                            <option value="2" <?php //if($user_id == "2") { echo "selected"; } ?>>テック次郎</option>
-                            <option value="3" <?php //if($user_id == "3") { echo "selected"; } ?>>佐藤あさひ</option>
-                            <option value="4" <?php //if($user_id == "4") { echo "selected"; } ?>>鈴木かずま</option>
-                            <option value="5" <?php //if($user_id == "5") { echo "selected"; } ?>>高橋さくら</option>
-                            <option value="6" <?php //if($user_id == "6") { echo "selected"; } ?>>田中たいよう</option>
-                            <option value="7" <?php //if($user_id == "7") { echo "selected"; } ?>>伊藤はやと</option>
-                            <option value="8" <?php //if($user_id == "8") { echo "selected"; } ?>>渡辺まどか</option>
-                            <option value="9" <?php //if($user_id == "9") { echo "selected"; } ?>>山本はるか</option>
-                            <option value="10" <?php //if($user_id == "10") { echo "selected"; } ?>>中村そうた</option>
+                            @foreach($users as $user)   
+                            <option value="{{ $user->id }}" >{{ $user->name }}</option>
+                            @endforeach
                             </select>
                         </div>
 
                         <div class="form-group">
                             <label for="handleuser_id">対応者</label>
                             <select class="form-control" name="handleuser_id" >
-                            <option value="1" <?php //if($handleuser_id == "1") { echo "selected"; } ?>>テック太郎</option>
-                            <option value="2" <?php //if($handleuser_id == "2") { echo "selected"; } ?>>テック次郎</option>
-                            <option value="3" <?php //if($handleuser_id == "3") { echo "selected"; } ?>>佐藤あさひ</option>
-                            <option value="4" <?php //if($handleuser_id == "4") { echo "selected"; } ?>>鈴木かずま</option>
-                            <option value="5" <?php //if($handleuser_id == "5") { echo "selected"; } ?>>高橋さくら</option>
-                            <option value="6" <?php //if($handleuser_id == "6") { echo "selected"; } ?>>田中たいよう</option>
-                            <option value="7" <?php //if($handleuser_id == "7") { echo "selected"; } ?>>伊藤はやと</option>
-                            <option value="8" <?php //if($handleuser_id == "8") { echo "selected"; } ?>>渡辺まどか</option>
-                            <option value="9" <?php //if($handleuser_id == "9") { echo "selected"; } ?>>山本はるか</option>
-                            <option value="10" <?php //if($handleuser_id == "10") { echo "selected"; } ?>>中村そうた</option>
+                            @foreach($users as $user)   
+                            <option value="{{ $user->id }}" >{{ $user->name }}</option>
+                            @endforeach
                             </select>
                         </div>
 
@@ -87,12 +65,12 @@
 
                         <div class="form-group">
                             <label for="name">対応内容</label>
-                            <input type="text" class="form-control" id="name" name="name" placeholder="対応内容">
+                            <textarea class="form-control" id="name" name="name" rows="3" placeholder="対応内容" required>{{old('name')}}</textarea>
                         </div>
 
                         <div class="form-group">
                             <label for="remark">備考</label>
-                            <input type="text" class="form-control" id="remark" name="remark" placeholder="備考">
+                            <textarea class="form-control" id="remark" name="remark" rows="3" placeholder="備考">{{old('remark')}}</textarea>
                         </div>
 
                         <div class="form-group">
@@ -108,20 +86,17 @@
 
                     </div>
                     </table>
-<!-- //以下レイアウト整理中　ボタン左右に配置予定 -->
-                    <!-- <div class="card-footer">
-                        <button type="button" onClick="history.back()" class="btn btn-primary">戻る</button>
-                        <div class="btn-group ml-auto">
-                            <button type="submit" class="btn btn-primary"  >登録/更新</button>
-                        </div>
-                    </div> -->
+
                     <div class="btn-toolbar">
                         <div class="btn-group">
                             <button type="button" onClick="history.back()" class="btn btn-outline-primary">戻る</button>
                         </div>
-
-                        <div class="btn-group text-right ml-auto">
-                             <button type="submit" class="btn btn-outline-primary btn-m">登録/更新</button>
+                        <div class="col-md-9 text-right">
+                            <input type="checkbox" name="continue_registration" id="continue_registration" value="1" style="transform:scale(2)">
+                            <label for="continue_registration">　続けて登録</label>
+                        </div> 
+                        <div class="btn-group text-right ml-auto col-md-2">
+                             <button type="submit" class="btn btn-outline-primary btn-m">登録</button>
                         </div>
                     </div>
                 </form>
