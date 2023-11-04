@@ -45,7 +45,7 @@
         <div class="card-tools">
             <div class="input-group input-group-lg">
                 <div class="input-group-append">
-                    <a href="{{ url('items/add') }}" class="btn btn-default">新規対応登録へ</a>
+                    <a href="{{ url('items/add/new') }}" class="btn btn-default">新規対応登録へ</a>
                 </div>
             </div>
         </div>
