@@ -1,43 +1,41 @@
-## 商品管理システム
+# 顧客対応管理
 
-### 環境構築手順
+## 概要
+グループ内の担当者ごとの分担業務の管理と顧客情報の管理を容易にします。
 
-* Gitクローン
-* .env.example をコピーして .env を作成
-* MySQLのデータベース作成（名前：item_management）
-* Macの場合 .env の DB_PASSWORD を root に修正（Windowsは修正不要）
+顧客情報の管理。
 
-    ```INI
-    DB_PASSWORD=root
-    ```
+顧客案件内容の管理、案件の日程管理。
 
-* APP_KEY生成
+担当者ごとの案件管理。
 
-    ```console
-    php artisan key:generate
-    ```
+上記の顧客管理・案件管理・分担進捗管理を一元化します。
 
-* Composerインストール
+## 主な機能
+- ログイン・ログアウト機能
+- 顧客登録・修正・削除
+- 顧客一覧表示
+- 顧客検索
+- 顧客対応案件登録・修正・削除
+- 顧客ごとの対応案件一覧表示
+- 担当者一覧表示
+- 担当者ごとの対応案件一覧表示
 
-    ```console
-    composer install
-    ```
+## 開発環境
+```
+PHP 8.2.4
+MySQL 15.1
+Laravel 10.13.5
+```
 
-* フロント環境構築
+## 設計書
+[設計書ページへ](https://drive.google.com/drive/folders/13zjbQVb0H0Xx71Mh5yUj52G8o_BqJfpJ)
 
-    ```console
-    npm ci
-    npm run build
-    ```
+## システム閲覧
+[アプリケーションページへ](https://jp-crm-mw-4a216f453a10.herokuapp.com/login)
 
-* マイグレーション
-
-    ```console
-    php artisan migrate
-    ```
-
-* 起動
-
-    ```console
-    php artisan serve
-    ```
+### テストアカウント情報
+```
+メールアドレス：taro@techis.jp
+パスワード：Tarotaro1
+```
