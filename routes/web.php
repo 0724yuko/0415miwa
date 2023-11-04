@@ -27,6 +27,7 @@ Route::prefix('items')->group(function () {
     // items
     Route::get('/', [App\Http\Controllers\ItemController::class, 'list']);//一覧表示
     Route::POST('/', [App\Http\Controllers\ItemController::class, 'list']);//一覧表示
+   // Route::get('/mnitems/{id}', [App\Http\Controllers\ItemController::class, 'mnitems'])->name('items.mnitems');//管理者用一覧表示
     Route::get('/handle/', [App\Http\Controllers\ItemController::class, 'handle'])->name('items.handle');//対応日で並べ替え
     // items/add
     //Route::get('/add', [App\Http\Controllers\ItemController::class, 'add']);//新規登録画面表示⇒adminlte.phpで新規登録のボタンに顧客idを'new'で設定したため、不要になった。
